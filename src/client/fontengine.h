@@ -168,6 +168,9 @@ private:
 	/** current font engine mode */
 	FontMode m_currentMode = FM_Standard;
 
+	/** mutex to mitigate lack of thread safety in FreeType */
+	std::mutex m_font_lock;
+
 	DISABLE_CLASS_COPY(FontEngine);
 };
 

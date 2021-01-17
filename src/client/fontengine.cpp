@@ -24,6 +24,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 #include "porting.h"
 #include "filesys.h"
 #include "gettext.h"
+#include "threading/mutex_auto_lock.h"
 
 #if USE_FREETYPE
 #include "irrlicht_changes/CGUITTFont.h"
@@ -103,6 +104,7 @@ void FontEngine::cleanCache()
 /******************************************************************************/
 irr::gui::IGUIFont *FontEngine::getFont(FontSpec spec)
 {
+	MutexAutoLock lock(this->m_font_lock);
 	if (spec.mode == FM_Unspecified) {
 		spec.mode = m_currentMode;
 	} else if (m_currentMode == FM_Simple) {
